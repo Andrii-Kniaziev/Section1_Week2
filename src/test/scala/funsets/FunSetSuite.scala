@@ -36,6 +36,8 @@ class FunSetSuite extends munit.FunSuite:
     val s1 = singletonSet(1)
     val s2 = singletonSet(2)
     val s3 = singletonSet(3)
+    val s4 = (e: Int) => e > 5
+    val s5 = (e: Int) => e < 10
 
   /**
    * This test is currently disabled (by using @Ignore) because the method
@@ -44,7 +46,7 @@ class FunSetSuite extends munit.FunSuite:
    * Once you finish your implementation of "singletonSet", remove the
    * .ignore annotation.
    */
-  test("singleton set one contains one".ignore) {
+  test("singleton set one contains one") {
 
     /**
      * We create a new instance of the "TestSets" trait, this gives us access
@@ -66,7 +68,13 @@ class FunSetSuite extends munit.FunSuite:
       assert(!contains(s, 3), "Union 3")
   }
 
-
+  test("intersect") {
+    new TestSets:
+      val s = intersect(s4, s5)
+      assert(contains(s, 6), "Intersect 6")
+      assert(contains(s, 9), "Intersect 9")
+      assert(!contains(s, 10), "Intersect out of bound")
+  }
 
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
