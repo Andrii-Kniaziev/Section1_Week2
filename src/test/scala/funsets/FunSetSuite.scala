@@ -38,6 +38,8 @@ class FunSetSuite extends munit.FunSuite:
     val s3 = singletonSet(3)
     val s4 = (e: Int) => e > 5
     val s5 = (e: Int) => e < 10
+    val s6 = (e: Int) => e >= 5 && e <= 10
+
 
   /**
    * This test is currently disabled (by using @Ignore) because the method
@@ -76,5 +78,24 @@ class FunSetSuite extends munit.FunSuite:
       assert(!contains(s, 10), "Intersect out of bound")
   }
 
+  test("exists") {
+    new TestSets:
+      val f = (e: Int) => e * e >= 36
+      val f1 = (e: Int) => e * e < 36
+      assert(exists(s4, f), "exists square of (e) that greater or equal to 36, where e > 5")
+      assert(!exists(s4, f1), "does not exist square of (e) that less then 36, where e > 5")
+  }
+
+  test("map") {
+    new TestSets:
+      val mapped = map(s6, (x) => x + 10)
+      assert(contains(mapped, 15), "new set contsins 15")
+      assert(contains(mapped, 20), "new set contsins 20")
+      assert(!contains(mapped, 14), "new set does not contain 14")
+      assert(!contains(mapped, 21), "new set does not contain 21")
+      assert(contains(s6, 10) && !contains(mapped, 10), "old set contains value that new set doesn`t contain")
+  }
+
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
+

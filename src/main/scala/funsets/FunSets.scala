@@ -96,3 +96,4 @@ trait FunSets extends FunSetsInterface:
     println(toString(s))
 
 object FunSets extends FunSets
+
